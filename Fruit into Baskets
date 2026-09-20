@@ -1,0 +1,24 @@
+from typing import List
+from collections import defaultdict
+
+class Solution:
+    def totalFruit(self, fruits: List[int]) -> int:
+        n = len(fruits)
+        left = 0
+        d = defaultdict(int)
+        maxlen = 0
+
+        for right in range(n):
+            d[fruits[right]] += 1
+
+            # Shrink window if more than 2 types
+            while len(d) > 2:
+                d[fruits[left]] -= 1
+                if d[fruits[left]] == 0:
+                    del d[fruits[left]]
+                left += 1
+
+            # Update max length of valid window
+            maxlen = max(maxlen, right - left + 1)
+
+        return maxlen
