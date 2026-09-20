@@ -1,0 +1,24 @@
+from typing import List
+
+class Solution:
+    def combinationSum3(self, k: int, n: int) -> List[List[int]]:
+        def backtrack(n, k, comb, ans, last):
+            if n == 0 and len(comb) == k:
+                ans.append(comb.copy())
+                return
+            if n == 0 and len(comb) < k:
+                return
+            if len(comb) > k:
+                return
+            for num in range(last, 10):
+                if num <= n:
+                    comb.append(num)
+                    backtrack(n - num, k, comb, ans, num + 1)
+                    comb.pop()
+                else:
+                    break
+
+        comb = []
+        ans = []
+        backtrack(n, k, comb, ans, 1)
+        return ans
