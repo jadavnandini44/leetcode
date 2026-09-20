@@ -1,0 +1,24 @@
+from typing import List
+
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        def backtrack(ind, subset, ans, candidates, target):
+            if target == 0:
+                ans.append(subset.copy())
+                return
+            if target < 0:
+                return
+            if ind == len(candidates):
+                return
+
+            # Include current candidate
+            subset.append(candidates[ind])
+            backtrack(ind, subset, ans, candidates, target - candidates[ind])
+            subset.pop()
+
+            # Exclude current candidate and move to next
+            backtrack(ind + 1, subset, ans, candidates, target)
+
+        ans = []
+        backtrack(0, [], ans, candidates, target)
+        return ans
